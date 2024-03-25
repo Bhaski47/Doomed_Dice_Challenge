@@ -25,7 +25,7 @@ to iterate through all possible combinations of faces on Die A and Die B.
 The outer loop iterates over the faces of Die A, and the inner loop
 iterates over the faces of Die B and prints all the possibilities.
 
-![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/PartA2.java_Output.png)
+![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/blob/main/PartA2.java_Output.png)
 
 ## 3)	Calculate the Probability of all Possible Sums occurring among the
 number of combinations from (2).
@@ -38,11 +38,11 @@ The logic is that to calculate the probabilities of all possible sums that can o
 •	By iterating through all potential combinations of face values on the two dice and tallying the occurrences of each sum, the code determines the probability of each outcome. 
 •	Finally, it presents the probabilities, offering insights into the relative likelihoods of different sums when rolling the dice.
 
-![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/PartA3.java_Output.png)
+![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/blob/main/PartA3.java_Output.png)
 
 ## PART-B
 
 The combined outcomes of rolling two dice, represented by arrays dieA and dieB, maintain specific probabilities. This adjustment is achieved by first calculating a scaling factor derived from the total sums of the face values of both dice. Subsequently, dieA's face values are constrained within the range of 1 to 4. Following this, the code computes the original frequency distribution representing all possible sums resulting from rolling dieA and dieB. It then adjusts this distribution using the previously calculated scaling factor.
 After the adjustment, the code recalculates the probabilities associated with each sum, both before and after the adjustment process. These probabilities are then printed out for comparison. Finally, the adjusted face values of dieB are returned, and both dieA and dieB's modified values are displayed. By undergoing this process, the code ensures that the probabilities linked with the combined outcomes of rolling both dice remain consistent even after the adjustment.
 
-![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/PartB.java_Output)
+![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/blob/main/PartB.java_Output.png)
