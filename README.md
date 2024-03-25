@@ -32,11 +32,11 @@ number of combinations from (2).
 
 The logic is that to calculate the probabilities of all possible sums that can occur when two six-sided dice are rolled.Firstly, it constructs a distribution representing the sums resulting from all combinations of face values on the two dice.Then, it computes the probability of each sum by counting the occurrences of each sum in the distribution and dividing by the total number of combinations. Finally, it displays the calculated probabilities for each sum from 2 to 12
 ### Example:
-•	Consider rolling two six-sided dice. 
-•	The code calculates the likelihood of obtaining each possible sum, ranging from 2 to 12.
-•	For instance, when both dice show a face value of 1, the sum is 2. 
-•	By iterating through all potential combinations of face values on the two dice and tallying the occurrences of each sum, the code determines the probability of each outcome. 
-•	Finally, it presents the probabilities, offering insights into the relative likelihoods of different sums when rolling the dice.
+*	Consider rolling two six-sided dice. 
+*	The code calculates the likelihood of obtaining each possible sum, ranging from 2 to 12.
+*	For instance, when both dice show a face value of 1, the sum is 2. 
+*	By iterating through all potential combinations of face values on the two dice and tallying the occurrences of each sum, the code determines the probability of each outcome. 
+*	Finally, it presents the probabilities, offering insights into the relative likelihoods of different sums when rolling the dice.
 
 ![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/blob/main/PartA3.java_Output.png)
 
