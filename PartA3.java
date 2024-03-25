@@ -2,13 +2,13 @@
    Part-A
    3.Calculate the Probability of all Possible Sums occurring among the number of
    combinations from (2).
- */
+*/
 public class PartA3 {
     private static final int MAX = 6;
     // To calculate the distribution of all possible combinations
     private static int[][] calculateCombinationDistribution() {
         int[][] distribution = new int[MAX][MAX];
-        for (int i=0;i<MAX; i++) {
+        for (int i=0;i<MAX;i++) {
             for (int j=0;j<MAX;j++) {
                 distribution[i][j] = i + j + 2; // Sum of Die A + Die B
             }
