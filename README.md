@@ -15,7 +15,7 @@ Since there are 6 outcomes on the first die and 6 outcomes on the second die, yo
 Multiplicative Principle:
 The logic is that each die has six sides, so there are 6 possible outcomes for each die. Therefore, the total number of combinations is 6×6=36.
 
-![image]([https://github.com/Bhaski47/Doomed_Dice_Challenge/PartA1.java_Output.png](https://github.com/Bhaski47/Doomed_Dice_Challenge/blob/main/PartA1.java_Output.png))
+![image](https://github.com/Bhaski47/Doomed_Dice_Challenge/blob/main/PartA1.java_Output.png)
 
 ## 2)	Calculate and display the distribution of all possible combinations that can be obtained when rolling both Die A and Die B together. Show the math along with the code!
 
