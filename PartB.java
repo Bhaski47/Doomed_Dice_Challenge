@@ -1,105 +1,113 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Arrays;
-
 public class PartB {
-
-    // Calculate scaling factor based on the sum of die faces
-    public static double calculateScalingFactor(int[] dieA, int[] dieB) {
-        double sumA = Arrays.stream(dieA).sum(); // Sum of die A faces
-        double sumB = Arrays.stream(dieB).sum(); // Sum of die B faces
-        return sumA / sumB;
-    }
-
-    // Adjust die B spots based on scaling factor
-    public static int[] adjustDieBSpots(int[] dieB, double scalingFactor, int[] originalFrequency, int totalCombinationsBefore) {
-        int[] adjustedFrequency = new int[originalFrequency.length];
-
-        // Adjust frequency of each sum after reattaching spots
-        for (int i = 0; i < originalFrequency.length; i++) {
-            adjustedFrequency[i] = (int) Math.round(originalFrequency[i] * scalingFactor);
-        }
-
-        int totalCombinationsAfter = Arrays.stream(adjustedFrequency).sum(); // Total combinations after adjustment
-
-        // Adjust spots in die B to maintain original probabilities
-        int[] adjustedDieB = new int[dieB.length];
-        for (int i = 0; i < dieB.length; i++) {
-            adjustedDieB[i] = (int) Math.round(dieB[i] * totalCombinationsBefore / (double) totalCombinationsAfter);
-        }
-        return adjustedDieB;
-    }
-
-    // Calculate probabilities based on frequency list
-    public static double[] calculateProbabilities(int[] frequencyList, int totalCombinations) {
-        double[] probabilities = new double[frequencyList.length];
-        for (int i = 0; i < frequencyList.length; i++) {
-            probabilities[i] = frequencyList[i] / (double) totalCombinations;
-        }
-        return probabilities;
-    }
-
-    // Print probabilities with a given prefix
-    public static void printProbabilities(double[] probabilities, String prefix) {
-        for (int i = 0; i < probabilities.length; i++) {
-            System.out.printf("%sP(Sum=%d) = %.4f%n", prefix, i, probabilities[i]);
-        }
-    }
-
-    // Perform the adjustment of dice A and B
-    public static int[] undoomDice(int[] dieA, int[] dieB) {
-        // Calculate scaling factor based on die A and die B sums
-        double scalingFactor = calculateScalingFactor(dieA, dieB);
-
-        // Limit the values of die A to be within 1 and 4
-        int[] a = Arrays.stream(dieA).map(spots -> Math.min(4, spots)).toArray();
-
-        // Calculate total combinations before adjustment
-        int totalCombinationsBefore = dieA.length * dieB.length;
-
-        // Calculate original frequency of each sum
-        int[] originalFrequency = new int[Arrays.stream(dieA).max().getAsInt() + Arrays.stream(dieB).max().getAsInt() + 1];
-        for (int faceA : dieA) {
-            for (int faceB : dieB) {
-                originalFrequency[faceA + faceB]++;
+    static ArrayList<ArrayList<Integer>> diceA = new ArrayList<>();
+    static ArrayList<ArrayList<Integer>> diceB = new ArrayList<>();
+    static HashMap<Integer, Integer> originalSums = new HashMap<>();
+    static HashMap<Integer, Double> originalPossibility = new HashMap<>();
+    static int totCombination;
+    public static void main(String[] args) {
+        int[] Die_A = {1,2,3,4,5,6};
+        int[] Die_B = {1,2,3,4,5,6};
+        System.out.print("Original DiceA = ");
+        Arrays.toString(Die_A);
+        System.out.print("Original DiceB = ");
+        Arrays.toString(Die_B);
+        totCombination = Die_A.length * Die_B.length;
+        for (int i:Die_A) {
+            for (int j:Die_B) {
+                int sum = i+j;
+                int occurrences = originalSums.getOrDefault(sum,0) + 1;
+                originalSums.put(sum,occurrences);
             }
         }
-
-        // Calculate adjusted frequency of each sum after reattaching spots
-        int[] adjustedFrequency = new int[originalFrequency.length];
-        for (int i = 0; i < originalFrequency.length; i++) {
-            adjustedFrequency[i] = (int) Math.round(originalFrequency[i] * scalingFactor);
+        for (int key : originalSums.keySet()) {
+            originalPossibility.put(key,(double) originalSums.get(key)/totCombination);
         }
-
-        // Calculate total combinations after adjustment
-        int totalCombinationsAfter = Arrays.stream(adjustedFrequency).sum();
-
-        // Adjust spots in die B to maintain original probabilities
-        int[] b = adjustDieBSpots(dieB, scalingFactor, originalFrequency, totalCombinationsBefore);
-
-        // Calculate probabilities before and after reattachment
-        double[] originalProbabilities = calculateProbabilities(originalFrequency, totalCombinationsBefore);
-        double[] adjustedProbabilities = calculateProbabilities(adjustedFrequency, totalCombinationsAfter);
-
-        // Print probabilities before and after reattachment
-        System.out.println("Probabilities before reattachment:");
-        printProbabilities(originalProbabilities, "  ");
-
-        System.out.println("\nProbabilities after reattachment:");
-        printProbabilities(adjustedProbabilities, "  ");
-
-        return a;
+        System.out.println("\nOriginal Probabilities: ");
+        for (int key : originalPossibility.keySet()) {
+            System.out.println("P(Sum = " + key + ")  Occurrence = " + originalSums.get(key) + "  Probability = " + originalPossibility.get(key));
+        }
+        System.out.println();
+        changeDice(Die_A,Die_B);
     }
-
-    public static void main(String[] args) {
-        // Example dice values
-        int[] dieA = {1, 2, 3, 4, 5, 6};
-        int[] dieB = dieA;
-
-        // Perform dice adjustment
-        int[] newDieA = undoomDice(dieA, dieB);
-
-        // Display modified values of die A
-        System.out.println("\nModified Values of the dice:");
-        System.out.println("New Die A: " + Arrays.toString(newDieA));
-        System.out.println("New Die B: " + Arrays.toString(dieB));
+    static void changeDice(int[] Die_A, int[] Die_B) {
+        for (int i = 1; i < 5; i++) {
+            ArrayList<Integer> tempA = new ArrayList<>();
+            tempA.add(i);
+            diceAPossibility(i, tempA);
+        }
+        for (int j = 1; j < 12; j++) {
+            ArrayList<Integer> tempB = new ArrayList<>();
+            tempB.add(j);
+            diceBPossibility(j, tempB);
+        }
+        System.out.println("Undooming Dice A and Dice B...");
+        for (ArrayList<Integer> i : diceA) {
+            for (ArrayList<Integer> j : diceB) {
+                HashMap<Integer, Integer> temp = new HashMap<>();
+                for (int k = 0; k < i.size(); k++) {
+                    for (int l = 0; l < j.size(); l++) {
+                        int sum = i.get(k) + j.get(l);
+                        temp.put(sum, temp.getOrDefault(sum, 0) + 1);
+                    }
+                }
+                int c = 0;
+                for (Integer key : temp.keySet()) {
+                    if (temp.get(key).equals(originalSums.getOrDefault(key, -1))) {
+                        c++;
+                    }
+                }
+                if (c == 11) {
+                    System.out.println("Transformed Dice A -> " + i);
+                    System.out.println("Transformed Dice B -> " + j);
+                    System.out.println("\nProbability of Dice After Transforming:");
+                    for (Integer key : temp.keySet()) {
+                        System.out.println("P(Sum = " + key + ") Occurrence = " + temp.get(key) + "  Probability = " + ((double) temp.get(key) / totCombination));
+                    }
+                    return;
+                }
+            }
+        }
+    }
+    static void diceAPossibility(int number, ArrayList<Integer> temp) {
+        if (number > 4) return;
+        if (temp.size() > 6) return;
+        if (temp.size() == 6) {
+            if (!diceA.contains(temp)) {
+                diceA.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        for (int i = number; i <= 5; i++) {
+            ArrayList<Integer> newTemp = new ArrayList<>(temp);
+            newTemp.add(i);
+            diceAPossibility(i, newTemp);
+        }
+    }
+    static void diceBPossibility(int number, ArrayList<Integer> temp) {
+        if (number > 11) return;
+        if (temp.size() > 6) return;
+        if (temp.size() == 6) {
+            if (!diceB.contains(temp)) {
+                diceB.add(new ArrayList<>(temp));
+            }
+            return;
+        }
+        for (int i = number + 1; i <= 12; i++) {
+            ArrayList<Integer> newTemp = new ArrayList<>(temp);
+            newTemp.add(i);
+            diceBPossibility(i, newTemp);
+        }
+    }
+    static void printArray(Integer[] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.print(array[i]);
+            if (i < array.length - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println();
     }
 }
